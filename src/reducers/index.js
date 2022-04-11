@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import exampleAction from "./exampleAction";
+import optionStatus from "./optionStatus";
 
 const reducers = combineReducers({
-  exampleAction,
+  optionStatus,
 });
 
 export default reducers;

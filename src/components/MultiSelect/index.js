@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { connect } from "react-redux";
+import { optionStatusAction } from "../../actions/index";
 import { ReactComponent as CheckMark } from "./checkmark.svg";
-function MultiSelect() {
+function MultiSelect({ optionStatusAction, optionStatus }) {
   const Options = [
     "Airport",
     "Alternative",
@@ -15,8 +17,9 @@ function MultiSelect() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedIndexes, setSelectedIndexes] = useState([]);
   useEffect(() => {
-    console.log(selectedIndexes);
-  }, [selectedIndexes]);
+    // console.log(optionStatus);
+    setIsOpen(optionStatus);
+  }, [optionStatus]);
 
   const updateSelectedIndexes = (index) => {
     if (selectedIndexes.includes(index)) {
@@ -29,15 +32,23 @@ function MultiSelect() {
   };
   const isOpenStatus = () => {
     if (isOpen) {
-      setIsOpen(false);
+      //   setIsOpen(false);
+      optionStatusAction(false);
     } else {
-      setIsOpen(true);
+      //   setIsOpen(true);
+      optionStatusAction(true);
     }
   };
   const buttonClassName = isOpen
     ? "MultiSelect_Component__isOpen"
     : "MultiSelect_Component__isClose";
 
+  const buttonName =
+    selectedIndexes.length < 1
+      ? "Media Type"
+      : selectedIndexes.length === 1
+      ? `${selectedIndexes[0]} only`
+      : `Media Type + ${selectedIndexes.length}`;
   const OptionsComponent = Options.map((option, index) => (
     <div
       className="option"
@@ -51,14 +62,22 @@ function MultiSelect() {
     </div>
   ));
 
+  const MultiSelect_Component__OptionsStatus = isOpen ? (
+    <div className="MultiSelect_Component__Options">{OptionsComponent}</div>
+  ) : null;
+
   return (
     <div className="MultiSelect_Component">
-      <button className={buttonClassName} onClick={isOpenStatus}>
-        Media Type
-      </button>
-      <div className="MultiSelect_Component__Options">{OptionsComponent}</div>
+      <div className="MultiSelect_Button">
+        <button className={buttonClassName} onClick={isOpenStatus}>
+          {buttonName}
+        </button>
+      </div>
+      {MultiSelect_Component__OptionsStatus}
     </div>
   );
 }
-
-export default MultiSelect;
+const mapStateToProps = (state) => ({
+  optionStatus: state.optionStatus,
+});
+export default connect(mapStateToProps, { optionStatusAction })(MultiSelect);

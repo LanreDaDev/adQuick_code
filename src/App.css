@@ -1,8 +1,9 @@
 .app_MultiSelect{
-    max-width: 800px;
+    /* max-width: 800px; */
     display: flex;
     justify-content: center;
     padding: 30px;
+    height: 100vh;
     
 }
 
@@ -29,7 +30,7 @@ button:hover{
     color: #fff;
 }
 .MultiSelect_Component{
-
+    width: 183px;
 }
 .MultiSelect_Component__Options{
 margin-top: 15px;
@@ -38,13 +39,12 @@ border: 1px solid #EEEEEE;
 box-sizing: border-box;
 box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.08);
 border-radius: 4px;
-width: 183px;
 font-size: 14px;
 font-weight: 400;
 line-height: 32px;
 letter-spacing: 0em;
 text-align: left;
-
+z-index: 1000;
 }
 .MultiSelect_Component__Options .option{
     padding: 2px 15px;
